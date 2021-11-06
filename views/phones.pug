@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1= title
+  p Phones results
+  div(class="container-fluid")
+        div(class="row")
+            -
+                let details = [
+                    {
+                        "pName": "oneplus",
+                        "pPixels": "1080p",
+                        "pCost": 9000
+                    },
+                    {
+                        "pName": "apple",
+                        "pPixels": "1720p",
+                        "pCost": 17500
+                    },
+                    {
+                        "pName": "samsung",
+                        "pPixels": "720p",
+                        "pCost": 19000
+                    },                   
+                ]
+            each c,index in details
+                div(class="col-sm-2" onclick=`buy(${index})`) #{c.pName}
+                div(class="col-sm-2" onclick=`buy(${index})`) #{c.pPixels}
+                div(class="col-sm-2" onclick=`buy(${index})`) #{c.pCost}
+
+                script.                
+                      function buy(itemNo)
+                      {
+                            alert(`You purchased item ${itemNo+1}`)
+                      }
