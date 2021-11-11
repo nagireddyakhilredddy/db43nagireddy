@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+var express = require('express'); 
+const phones_controlers= require('../controllers/phones'); 
+var router = express.Router(); 
+ 
+/* GET phoness */ 
+router.get('/', phones_controlers.phones_view_all_Page ); 
+module.exports = router; 
