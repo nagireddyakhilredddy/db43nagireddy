@@ -72,7 +72,7 @@ exports.phones_create_post = async function(req, res) {
 exports.phones_detail = async function(req, res) { 
     console.log("detail"  + req.params.id) 
     try { 
-        result = await Costume.findById( req.params.id) 
+        result = await phones.findById( req.params.id) 
         res.send(result) 
     } catch (error) { 
         res.status(500) 
