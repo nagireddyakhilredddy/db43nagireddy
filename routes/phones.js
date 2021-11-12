@@ -6,4 +6,4 @@ var router = express.Router();
 router.get('/', phones_controlers.phones_view_all_Page ); 
 module.exports = router;
 // GET request for one costume. 
-router.get('/costumes/:id', phones_controlers.phones_detail); 
+router.get('/phones/:id', phones_controlers.phones_detail); 
