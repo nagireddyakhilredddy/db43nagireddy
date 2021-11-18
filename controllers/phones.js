@@ -1,34 +1,34 @@
 var phones = require('../models/phones'); 
  
-// List of all Costumes 
+// List of all phoness 
 exports.phones_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Costume list'); 
+    res.send('NOT IMPLEMENTED: phones list'); 
 }; 
  
-// for a specific Costume. 
+// for a specific phones. 
 exports.phones_detail = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id); 
+    res.send('NOT IMPLEMENTED: phones detail: ' + req.params.id); 
 }; 
  
-// Handle Costume create on POST. 
+// Handle phones create on POST. 
 exports.phones_create_post = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Costume create POST'); 
+    res.send('NOT IMPLEMENTED: phones create POST'); 
 }; 
  
-// Handle Costume delete form on DELETE. 
+// Handle phones delete form on DELETE. 
 exports.phones_delete = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Costume delete DELETE ' + req.params.id); 
+    res.send('NOT IMPLEMENTED: phones delete DELETE ' + req.params.id); 
 }; 
  
-// Handle Costume update form on PUT. 
+// Handle phones update form on PUT. 
 exports.phones_update_put = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Costume update PUT' + req.params.id); 
+    res.send('NOT IMPLEMENTED: phones update PUT' + req.params.id); 
 }; 
-// List of all Costumes 
+// List of all phoness 
 exports.phones_list = async function(req, res) { 
     try{ 
-        theCostumes = await phones.find(); 
-        res.send(theCostumes); 
+        thephoness = await phones.find(); 
+        res.send(thephoness); 
     } 
     catch(err){ 
         res.status(500); 
@@ -39,22 +39,22 @@ exports.phones_list = async function(req, res) {
 // Handle a show all view 
 exports.phones_view_all_Page = async function(req, res) { 
     try{ 
-        theCostumes = await phones.find(); 
-        res.render('phones', { title: 'phones Search Results', results: theCostumes }); 
+        thephoness = await phones.find(); 
+        res.render('phones', { title: 'phones Search Results', results: thephoness }); 
     } 
     catch(err){ 
         res.status(500); 
         res.send(`{"error": ${err}}`); 
     }   
 }; 
-// Handle Costume create on POST. 
+// Handle phones create on POST. 
 exports.phones_create_post = async function(req, res) { 
     console.log(req.body) 
     let document = new phones(); 
     // We are looking for a body, since POST does not have query parameters. 
     // Even though bodies can be in many different formats, we will be picky 
     // and require that it be a json object 
-    // {"costume_type":"goat", "cost":12, "size":"large"} 
+    // {"phones_type":"goat", "cost":12, "size":"large"} 
     document.pName = req.body.pName; 
     document.pEngine = req.body.pEngine; 
     document.pCost = req.body.pCost; 
@@ -68,7 +68,7 @@ exports.phones_create_post = async function(req, res) {
     }   
 };
 
-// for a specific Costume. 
+// for a specific phones. 
 exports.phones_detail = async function(req, res) { 
     console.log("detail"  + req.params.id) 
     try { 
@@ -80,7 +80,7 @@ exports.phones_detail = async function(req, res) {
     } 
 }; 
 
-// Handle Costume update form on PUT. 
+// Handle phones update form on PUT. 
 exports.phones_update_put = async function(req, res) { 
     console.log(`update on id ${req.params.id} with body 
 ${JSON.stringify(req.body)}`) 
@@ -98,5 +98,74 @@ ${JSON.stringify(req.body)}`)
         res.status(500) 
         res.send(`{"error": ${err}: Update for id ${req.params.id} 
 failed`); 
+    } 
+}; 
+
+// Handle phones delete on DELETE. 
+exports.phones_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await phones.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
+}; 
+
+ // Handle a show one view with id specified by query 
+ exports.phones_view_one_Page = async function(req, res) { 
+    console.log("single view for id "  + req.query.id) 
+    try{ 
+        result = await phones.findById( req.query.id) 
+        res.render('phonesdetail',  
+{ title: 'phones Detail', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+
+ // Handle building the view for creating a phones. 
+// No body, no in path parameter, no query. 
+// Does not need to be async 
+exports.phones_create_Page =  function(req, res) { 
+    console.log("create view") 
+    try{ 
+        res.render('phonescreate', { title: 'phones Create'}); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+};
+
+// Handle building the view for updating a phones. 
+// query provides the id 
+exports.phones_update_Page =  async function(req, res) { 
+    console.log("update view for item "+req.query.id) 
+    try{ 
+        let result = await phones.findById(req.query.id) 
+        res.render('phonesupdate', { title: 'phones Update', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+};
+
+// Handle a delete one view with id from query 
+exports.phones_delete_Page = async function(req, res) { 
+    console.log("Delete view for id "  + req.query.id) 
+    try{ 
+        result = await phones.findById(req.query.id) 
+        res.render('phonesdelete', { title: 'phones Delete', toShow: 
+result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
     } 
 }; 

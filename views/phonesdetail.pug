@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let phonesid = toShow._id 
+  - let pName = toShow.pName 
+  - let pPixels = toShow.pPixels 
+  - let pCost = toShow.pCost
+  div 
+    div.row 
+      div(class='phonesAttr mr-3') phones ID is: 
+      div #{phonesid} 
+    div.row 
+      div(class='phonesAttr mr-3') phones Type is: 
+      div #{pName} 
+    div.row 
+      div(class='phonesAttr mr-3') phones Size is: 
+      div #{pCost} 
+    div.row 
+      div(class='phonesAttr mr-3') phones Cost is: 
+      div #{pPixels}
