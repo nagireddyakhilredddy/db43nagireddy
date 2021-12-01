@@ -97,7 +97,7 @@ instance3.save( function(err,doc) {
 let reseed = true; 
 if (reseed) { recreateDB();} 
 
-var Account =require('./models/account')); 
+var Account =require('./models/account'); 
  
 passport.use(new LocalStrategy(Account.authenticate())); 
 passport.serializeUser(Account.serializeUser()); 
